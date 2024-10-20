@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace elevator_control_system.Models
 {
-    internal class ElevatorLog
+    public class ElevatorLog
     {
+        public int LogsId { get; set; }  // Primary key: logs_id
+
+        public DateTime Date { get; set; }  // Date of the log
+
+        public TimeSpan RequestedAt { get; set; }  // Time when the elevator was requested
+
+        public string Action { get; set; } // Description of the action
     }
 }
