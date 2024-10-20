@@ -1,0 +1,10 @@
+D:\University_Assignment\C#\elevator_control_system\obj\Debug\elevator_control_system.csproj.AssemblyReference.cache
+D:\University_Assignment\C#\elevator_control_system\obj\Debug\elevator_control_system.Elevator_Control_System.resources
+D:\University_Assignment\C#\elevator_control_system\obj\Debug\elevator_control_system.Properties.Resources.resources
+D:\University_Assignment\C#\elevator_control_system\obj\Debug\elevator_control_system.csproj.GenerateResource.cache
+D:\University_Assignment\C#\elevator_control_system\obj\Debug\elevator_control_system.csproj.CoreCompileInputs.cache
+D:\University_Assignment\C#\elevator_control_system\bin\Debug\elevator_control_system.exe.config
+D:\University_Assignment\C#\elevator_control_system\bin\Debug\elevator_control_system.exe
+D:\University_Assignment\C#\elevator_control_system\bin\Debug\elevator_control_system.pdb
+D:\University_Assignment\C#\elevator_control_system\obj\Debug\elevator_control_system.exe
+D:\University_Assignment\C#\elevator_control_system\obj\Debug\elevator_control_system.pdb
