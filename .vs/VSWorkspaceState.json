@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Database",
-    "\\Models"
+    ""
   ],
-  "SelectedNode": "\\Models\\ElevatorLog.cs",
+  "SelectedNode": "\\elevator_control_system.sln",
   "PreviewInSolutionExplorer": false
 }
