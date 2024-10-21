@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -18,12 +19,15 @@ namespace elevator_control_system
         int firstFloorPositionY = 20;
         int groundFloorPositionY = 300;
 
+    
         public Elevator_Control_System()
         {
             InitializeComponent();
             elevator.Top = groundFloorPositionY;
+            fetchLatestElevatorLogs();
         }
 
+        // Methods to insert the elevator logs
         public void insertElevatorLogs(string action_details)
         {
 
@@ -36,6 +40,53 @@ namespace elevator_control_system
             ElevatorController elevatorContoller = new ElevatorController();
 
             elevatorContoller.InsertElevatorLog(newLog);
+        }
+
+
+        // Methods to fetch the elevator logs
+        private void fetchLatestElevatorLogs()
+        {
+            // to set the auto generate columns to be false
+            logsGridView.AutoGenerateColumns = false;
+
+            logsGridView.Columns.Clear();
+
+            // to add new column named Logs Id
+            logsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Log ID",
+                DataPropertyName = "LogsId",
+                Width = 50
+            });
+
+            // to add new column named Date
+            logsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Date",
+                DataPropertyName = "Date",
+                Width = 100
+            });
+
+            // to add new column named Requested At
+            logsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Requested At",
+                DataPropertyName = "RequestedAt",
+                Width = 80
+            });
+
+            // to add new column named Action
+            logsGridView.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Action",
+                DataPropertyName = "Action",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            ElevatorController elevatorController = new ElevatorController();
+            List<ElevatorLog> logs = elevatorController.GetLatestElevatorLogs();
+            logsGridView.DataSource = logs;
+            logsGridView.Refresh();
         }
 
 
@@ -52,6 +103,9 @@ namespace elevator_control_system
 
             // calling function to insert logs to the database
             insertElevatorLogs("Elevator is moving to the First floor");
+
+            // to show the newly recorded logs
+            fetchLatestElevatorLogs();
         }
 
         private void groundFloorBtn_Click(object sender, EventArgs e)
@@ -65,6 +119,9 @@ namespace elevator_control_system
 
                 // calling function to insert logs to the database
                 insertElevatorLogs("Elevator is moving to the Ground floor");
+
+                // to show the newly recorded logs
+                fetchLatestElevatorLogs();
             }
         }
 
@@ -150,6 +207,22 @@ namespace elevator_control_system
 
                 }
             }
+        }
+
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

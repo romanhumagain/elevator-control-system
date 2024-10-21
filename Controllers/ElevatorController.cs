@@ -2,6 +2,7 @@
 using elevator_control_system.Models;    // Import your ElevatorLog model
 using MySqlConnector;
 using System;
+using System.Collections.Generic;
 
 namespace elevator_control_system.Controllers
 {
@@ -56,5 +57,60 @@ namespace elevator_control_system.Controllers
                 Console.WriteLine("Failed to connect to the database.");
             }
         }
+
+
+        // Method to fetch the data from the table 
+        public List<ElevatorLog> GetLatestElevatorLogs()
+        {
+            List<ElevatorLog> logs = new List<ElevatorLog>();
+            MySqlConnection conn = db.Connect(); 
+
+            if (conn != null)
+            {
+                try
+                {
+                    // SQL query to select all logs, ordered by date and requested_at descending
+                    string query = "SELECT logs_id, date, requested_at, action FROM elevator_logs ORDER BY date DESC, requested_at DESC";
+
+                    // Create a MySQL command object
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                    // Execute the query
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        ElevatorLog log = new ElevatorLog
+                        {
+                            LogsId = reader.GetInt32("logs_id"),
+                            Date = reader.GetDateTime("date"),
+                            RequestedAt = reader.GetTimeSpan("requested_at"),
+                            Action = reader.GetString("action")
+                        };
+                        logs.Add(log);
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error fetching elevator logs: " + ex.Message);
+                }
+                finally
+                {
+                    // to close the database 
+                    db.Close(conn);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Failed to connect to the database.");
+            }
+
+            return logs;  // Return the list of logs
+        }
+
+
+
     }
 }
