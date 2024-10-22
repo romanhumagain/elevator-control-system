@@ -46,8 +46,8 @@
             this.doorTimer = new System.Windows.Forms.Timer(this.components);
             this.firstFloorDoorPanelL = new System.Windows.Forms.PictureBox();
             this.firstFloorDoorPanelR = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.doorDisplayG = new System.Windows.Forms.PictureBox();
+            this.doorDisplayF = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.elevator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayBoard)).BeginInit();
@@ -57,8 +57,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.groundFloorDoorPanelR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelR)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doorDisplayG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doorDisplayF)).BeginInit();
             this.SuspendLayout();
             // 
             // elevator
@@ -219,32 +219,32 @@
             this.firstFloorDoorPanelR.TabIndex = 12;
             this.firstFloorDoorPanelR.TabStop = false;
             // 
-            // pictureBox2
+            // doorDisplayG
             // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox2.Location = new System.Drawing.Point(186, 422);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(43, 20);
-            this.pictureBox2.TabIndex = 13;
-            this.pictureBox2.TabStop = false;
+            this.doorDisplayG.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.doorDisplayG.Location = new System.Drawing.Point(176, 424);
+            this.doorDisplayG.Name = "doorDisplayG";
+            this.doorDisplayG.Size = new System.Drawing.Size(43, 20);
+            this.doorDisplayG.TabIndex = 13;
+            this.doorDisplayG.TabStop = false;
             // 
-            // pictureBox3
+            // doorDisplayF
             // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBox3.Location = new System.Drawing.Point(186, 12);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(43, 20);
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
+            this.doorDisplayF.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.doorDisplayF.Location = new System.Drawing.Point(176, 12);
+            this.doorDisplayF.Name = "doorDisplayF";
+            this.doorDisplayF.Size = new System.Drawing.Size(43, 20);
+            this.doorDisplayF.TabIndex = 14;
+            this.doorDisplayF.TabStop = false;
             // 
             // Elevator_Control_System
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1554, 709);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
+            this.ClientSize = new System.Drawing.Size(1598, 715);
+            this.Controls.Add(this.doorDisplayF);
+            this.Controls.Add(this.doorDisplayG);
             this.Controls.Add(this.firstFloorDoorPanelR);
             this.Controls.Add(this.firstFloorDoorPanelL);
             this.Controls.Add(this.groundFloorDoorPanelR);
@@ -270,8 +270,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.groundFloorDoorPanelR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelR)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doorDisplayG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doorDisplayF)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -294,8 +294,8 @@
         private System.Windows.Forms.Timer doorTimer;
         private System.Windows.Forms.PictureBox firstFloorDoorPanelL;
         private System.Windows.Forms.PictureBox firstFloorDoorPanelR;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox doorDisplayG;
+        private System.Windows.Forms.PictureBox doorDisplayF;
     }
 }
 

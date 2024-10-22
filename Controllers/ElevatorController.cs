@@ -63,7 +63,7 @@ namespace elevator_control_system.Controllers
         public List<ElevatorLog> GetLatestElevatorLogs()
         {
             List<ElevatorLog> logs = new List<ElevatorLog>();
-            MySqlConnection conn = db.Connect(); 
+            MySqlConnection conn = db.Connect();
 
             if (conn != null)
             {

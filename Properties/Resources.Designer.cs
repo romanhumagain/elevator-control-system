@@ -73,9 +73,29 @@ namespace elevator_control_system.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] g_door {
+            get {
+                object obj = ResourceManager.GetObject("g_door", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] g_floor {
             get {
                 object obj = ResourceManager.GetObject("g_floor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] one_door {
+            get {
+                object obj = ResourceManager.GetObject("one_door", resourceCulture);
                 return ((byte[])(obj));
             }
         }

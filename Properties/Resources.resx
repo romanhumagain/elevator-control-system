@@ -130,4 +130,10 @@
   <data name="one_floor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\one_floor.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="one_door" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\one_door.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="g_door" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\g_door.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
