@@ -48,6 +48,7 @@
             this.firstFloorDoorPanelR = new System.Windows.Forms.PictureBox();
             this.doorDisplayG = new System.Windows.Forms.PictureBox();
             this.doorDisplayF = new System.Windows.Forms.PictureBox();
+            this.clearLogsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.elevator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayBoard)).BeginInit();
@@ -143,18 +144,19 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gainsboro;
+            this.panel1.Controls.Add(this.clearLogsButton);
             this.panel1.Controls.Add(this.logsGridView);
             this.panel1.Controls.Add(this.logsLbl);
             this.panel1.Location = new System.Drawing.Point(719, 99);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(797, 506);
+            this.panel1.Size = new System.Drawing.Size(797, 549);
             this.panel1.TabIndex = 7;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // logsGridView
             // 
             this.logsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.logsGridView.Location = new System.Drawing.Point(22, 68);
+            this.logsGridView.Location = new System.Drawing.Point(23, 112);
             this.logsGridView.Name = "logsGridView";
             this.logsGridView.RowHeadersWidth = 51;
             this.logsGridView.RowTemplate.Height = 24;
@@ -237,6 +239,19 @@
             this.doorDisplayF.TabIndex = 14;
             this.doorDisplayF.TabStop = false;
             // 
+            // clearLogsButton
+            // 
+            this.clearLogsButton.BackColor = System.Drawing.Color.Red;
+            this.clearLogsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearLogsButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.clearLogsButton.Location = new System.Drawing.Point(337, 49);
+            this.clearLogsButton.Name = "clearLogsButton";
+            this.clearLogsButton.Size = new System.Drawing.Size(118, 36);
+            this.clearLogsButton.TabIndex = 2;
+            this.clearLogsButton.Text = "Clear Logs";
+            this.clearLogsButton.UseVisualStyleBackColor = false;
+            this.clearLogsButton.Click += new System.EventHandler(this.clearLogsButton_Click);
+            // 
             // Elevator_Control_System
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -296,6 +311,7 @@
         private System.Windows.Forms.PictureBox firstFloorDoorPanelR;
         private System.Windows.Forms.PictureBox doorDisplayG;
         private System.Windows.Forms.PictureBox doorDisplayF;
+        private System.Windows.Forms.Button clearLogsButton;
     }
 }
 

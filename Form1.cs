@@ -76,7 +76,7 @@ namespace elevator_control_system
             {
                 HeaderText = "Log ID",
                 DataPropertyName = "LogsId",
-                Width = 50
+                Width = 80
             });
 
             // to add new column named Date
@@ -109,6 +109,22 @@ namespace elevator_control_system
             logsGridView.Refresh();
         }
 
+        // method to clear logs
+        private void clearLogs()
+        {
+            ElevatorController elevatorController = new ElevatorController();
+            bool isLogsCleared = elevatorController.ClearLogs();
+
+            if (isLogsCleared)
+            {
+                fetchLatestElevatorLogs();
+                //MessageBox.Show("Logs cleared successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);//
+            }
+            else
+            {
+                MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
         }
@@ -126,9 +142,9 @@ namespace elevator_control_system
 
                 // calling function to insert logs to the database
                 insertElevatorLogs("Elevator is moving to the First floor");
-
-                // to show the newly recorded logs
                 fetchLatestElevatorLogs();
+
+
             }
         }
 
@@ -141,9 +157,8 @@ namespace elevator_control_system
 
             // calling function to insert logs to the database
             insertElevatorLogs("Elevator is moving to the Ground floor");
-
-            // to show the newly recorded logs
             fetchLatestElevatorLogs();
+
         }
 
         private void openDoorBtn_Click(object sender, EventArgs e)
@@ -168,12 +183,15 @@ namespace elevator_control_system
         {
             firstFloorBtn.Enabled = true;
             groundFloorBtn.Enabled = true;
+            clearLogsButton.Enabled = true;
+
         }
 
         private void disableLiftButton()
         {
             firstFloorBtn.Enabled = false;
             groundFloorBtn.Enabled = false;
+            clearLogsButton.Enabled = false;
         }
 
         // to disable the lift door button
@@ -181,6 +199,7 @@ namespace elevator_control_system
         {
             openDoorBtn.Enabled = false;
             closeDoorBtn.Enabled = false;
+
         }
 
         // to disable the lift door button
@@ -208,6 +227,7 @@ namespace elevator_control_system
 
                 firstFloorBtn.BackColor = Color.Green;
                 groundFloorBtn.BackColor = Color.White;
+
                 elevator.Top -= liftSpeed;
 
                 if (elevator.Top <= firstFloorPositionY)
@@ -229,6 +249,12 @@ namespace elevator_control_system
 
                     groundFloorBtn.Enabled = true;
                     enableDoorButton();
+
+                    // calling function to insert logs to the database
+                    insertElevatorLogs("Elevator stops at First floor");
+
+                    // to show the newly recorded logs
+                    fetchLatestElevatorLogs();
                 }
             }
             else if (isMovingToGroundFloor && elevator.Top < groundFloorPositionY)
@@ -246,6 +272,7 @@ namespace elevator_control_system
 
                 firstFloorBtn.BackColor = Color.White;
                 groundFloorBtn.BackColor = Color.Green;
+
                 elevator.Top += liftSpeed;
 
                 if (elevator.Top >= groundFloorPositionY)
@@ -268,6 +295,12 @@ namespace elevator_control_system
 
                     isAtGroundFloor = true;
                     enableDoorButton();
+
+                    // calling function to insert logs to the database
+                    insertElevatorLogs("Elevator stops at Ground floor");
+
+                    // to show the newly recorded logs
+                    fetchLatestElevatorLogs();
 
                 }
             }
@@ -471,6 +504,21 @@ namespace elevator_control_system
         private void groundFloorDoorPanelR_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void clearLogsButton_Click(object sender, EventArgs e)
+        {
+            // Display a confirmation dialog
+            var result = MessageBox.Show("Are you sure you want to clear the logs?",
+                                          "Confirm Clear Logs",
+                                          MessageBoxButtons.YesNo,
+                                          MessageBoxIcon.Warning);
+
+            // Check the user's response
+            if (result == DialogResult.Yes)
+            {
+                clearLogs();
+            }
         }
     }
 }

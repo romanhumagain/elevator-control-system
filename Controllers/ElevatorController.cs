@@ -111,6 +111,33 @@ namespace elevator_control_system.Controllers
         }
 
 
+        // method that handle the clear logs functionality
+        public bool ClearLogs()
+        {
+            bool isLogsCleared = false;
+            MySqlConnection conn = db.Connect();
+            if (conn != null)
+            {
+                try
+                {
+                    String query = "TRUNCATE TABLE elevator_logs";
+
+                    MySqlCommand command = new MySqlCommand(query, conn);
+                    command.ExecuteNonQuery();
+                    isLogsCleared = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error deleting elevator log: " + ex.Message);
+                    isLogsCleared = false;
+                }
+                finally
+                {
+                    db.Close(conn);
+                }
+            }
+            return isLogsCleared;
+        }
 
     }
 }

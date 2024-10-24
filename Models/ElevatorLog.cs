@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace elevator_control_system.Models
 {
     public class ElevatorLog
     {
-        public int LogsId { get; set; }  // Primary key: logs_id
+        public int LogsId { get; set; }
 
-        public DateTime Date { get; set; }  // Date of the log
+        public DateTime Date { get; set; }
 
-        public TimeSpan RequestedAt { get; set; }  // Time when the elevator was requested
+        public TimeSpan RequestedAt { get; set; }
 
-        public string Action { get; set; } // Description of the action
+        public string Action { get; set; }
     }
 }
