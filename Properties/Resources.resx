@@ -136,4 +136,10 @@
   <data name="g_door" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\g_door.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="direction_first_floor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\direction_first_floor.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="direction_ground_floor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\direction_ground_floor.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

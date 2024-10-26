@@ -3,6 +3,7 @@ using elevator_control_system.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace elevator_control_system
@@ -20,8 +21,7 @@ namespace elevator_control_system
         int firstFloorPositionY = 23;
         int groundFloorPositionY = 355;
 
-
-        private int doorSpeed = 1; // The speed at which the door moves
+        private int doorSpeed = 1;
 
         private bool isGroundFloorDoorOpening = false;
         private bool isGroundFloorDoorClosing = false;
@@ -33,7 +33,7 @@ namespace elevator_control_system
 
         private int leftDoorInitialX;
         private int rightDoorInitialX;
-        private int doorOpenMaxDistance = 60;
+        private int doorOpenMaxDistance = 68;
 
         private bool isDoorClosed = false;
 
@@ -127,6 +127,7 @@ namespace elevator_control_system
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+
         }
 
         private void firstFloorBtn_Click(object sender, EventArgs e)
@@ -184,6 +185,8 @@ namespace elevator_control_system
             firstFloorBtn.Enabled = true;
             groundFloorBtn.Enabled = true;
             clearLogsButton.Enabled = true;
+            requestFirstFloorBtn.Enabled = true;
+            requestGroundBtn.Enabled = true;
 
         }
 
@@ -192,6 +195,8 @@ namespace elevator_control_system
             firstFloorBtn.Enabled = false;
             groundFloorBtn.Enabled = false;
             clearLogsButton.Enabled = false;
+            requestFirstFloorBtn.Enabled = false;
+            requestGroundBtn.Enabled = false;
         }
 
         // to disable the lift door button
@@ -249,12 +254,16 @@ namespace elevator_control_system
 
                     groundFloorBtn.Enabled = true;
                     enableDoorButton();
+                    enableLiftButton();
 
                     // calling function to insert logs to the database
                     insertElevatorLogs("Elevator stops at First floor");
 
                     // to show the newly recorded logs
                     fetchLatestElevatorLogs();
+
+                    AutomaticOpenCloseDoor();
+
                 }
             }
             else if (isMovingToGroundFloor && elevator.Top < groundFloorPositionY)
@@ -295,12 +304,15 @@ namespace elevator_control_system
 
                     isAtGroundFloor = true;
                     enableDoorButton();
+                    enableLiftButton();
 
                     // calling function to insert logs to the database
                     insertElevatorLogs("Elevator stops at Ground floor");
 
                     // to show the newly recorded logs
                     fetchLatestElevatorLogs();
+
+                    AutomaticOpenCloseDoor();
 
                 }
             }
@@ -520,5 +532,57 @@ namespace elevator_control_system
                 clearLogs();
             }
         }
+
+
+
+        private void requestGroundBtn_Click(object sender, EventArgs e)
+        {
+            if (!isAtFirstFloor)
+            {
+                isMovingToFirstFloor = true;
+                isMovingToGroundFloor = false;
+                liftTimer.Start();
+
+                // calling function to insert logs to the database
+                insertElevatorLogs("Elevator is requested from the First floor");
+                fetchLatestElevatorLogs();
+            }
+
+        }
+
+        private void requestFirstFloorBtn_Click(object sender, EventArgs e)
+        {
+            if (!isAtGroundFloor)
+            {
+                isMovingToGroundFloor = true;
+                isMovingToFirstFloor = false;
+                liftTimer.Start();
+
+                // calling function to insert logs to the database
+                insertElevatorLogs("Elevator is requested from the Ground floor");
+                fetchLatestElevatorLogs();
+            }
+
+        }
+
+        private void firstFloorDoorPanelL_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        // Function to automatically open and close the door
+        public async Task AutomaticOpenCloseDoor()
+        {
+            await Task.Delay(500);
+
+            openElevatorDoor();
+            disableLiftButton();
+
+            await Task.Delay(3000);
+            closeElevatorDoor();
+            enableLiftButton();
+        }
+
+
     }
 }

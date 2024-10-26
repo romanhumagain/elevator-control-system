@@ -63,6 +63,26 @@ namespace elevator_control_system.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] direction_first_floor {
+            get {
+                object obj = ResourceManager.GetObject("direction_first_floor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] direction_ground_floor {
+            get {
+                object obj = ResourceManager.GetObject("direction_ground_floor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] down_indicator {
             get {
                 object obj = ResourceManager.GetObject("down_indicator", resourceCulture);
