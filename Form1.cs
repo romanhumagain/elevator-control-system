@@ -10,7 +10,11 @@ namespace elevator_control_system
 {
     public partial class Elevator_Control_System : Form
     {
+
+        // initializing the lift speed
         int liftSpeed = 5;
+
+        // to check whether the lift is moving to the first floor or not
         bool isMovingToFirstFloor = false;
         bool isMovingToGroundFloor = false;
 
@@ -18,6 +22,8 @@ namespace elevator_control_system
         bool isAtGroundFloor = true;
         bool isAtFirstFloor = false;
 
+
+        //defines where the elevator should be positioned vertically when it's at the first floor and ground floor.
         int firstFloorPositionY = 23;
         int groundFloorPositionY = 355;
 
@@ -134,7 +140,7 @@ namespace elevator_control_system
         {
             bool isDoorClosed = closeDoorBeforeMoving();
 
-            if (isDoorClosed)
+            if (isDoorClosed && !isAtFirstFloor)
             {
                 isMovingToFirstFloor = true;
                 isMovingToGroundFloor = false;
@@ -151,14 +157,18 @@ namespace elevator_control_system
 
         private void groundFloorBtn_Click(object sender, EventArgs e)
         {
-            isMovingToGroundFloor = true;
-            isMovingToFirstFloor = false;
-            firstFloorBtn.Enabled = false;
-            liftTimer.Start();
+            if (!isAtGroundFloor)
+            {
+                isMovingToGroundFloor = true;
+                isMovingToFirstFloor = false;
+                firstFloorBtn.Enabled = false;
+                liftTimer.Start();
 
-            // calling function to insert logs to the database
-            insertElevatorLogs("Elevator is moving to the Ground floor");
-            fetchLatestElevatorLogs();
+                // calling function to insert logs to the database
+                insertElevatorLogs("Elevator is moving to the Ground floor");
+                fetchLatestElevatorLogs();
+            }
+
 
         }
 
@@ -216,209 +226,313 @@ namespace elevator_control_system
 
         private void liftTimer_Tick(object sender, EventArgs e)
         {
-            if (isMovingToFirstFloor && elevator.Top > firstFloorPositionY)
+            try
             {
-                bool isDoorClosed = closeDoorBeforeMoving();
-
-                disableLiftButton();
-                disableDoorButton();
-                isAtGroundFloor = false;
-
-                doorDisplayF.Image = null;
-                doorDisplayG.Image = null;
-
-                displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\up_indicator_gif.gif");
-                displayBoard.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                firstFloorBtn.BackColor = Color.Green;
-                groundFloorBtn.BackColor = Color.White;
-
-                elevator.Top -= liftSpeed;
-
-                if (elevator.Top <= firstFloorPositionY)
+                // If the elevator is moving to the first floor and hasn't reached it yet
+                if (isMovingToFirstFloor && elevator.Top > firstFloorPositionY)
                 {
-                    displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\one_floor.png");
-                    displayBoard.SizeMode = PictureBoxSizeMode.CenterImage;
+                    // Ensure the door is closed before moving the elevator
+                    bool isDoorClosed = closeDoorBeforeMoving();
 
-                    elevator.Top = firstFloorPositionY;
-                    firstFloorBtn.BackColor = Color.Red;
-                    isAtFirstFloor = true;
-                    liftTimer.Stop();
+                    // Disable buttons during elevator movement to prevent interaction
+                    disableLiftButton();
+                    disableDoorButton();
+                    isAtGroundFloor = false;
 
-                    doorDisplayF.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\one_door.png");
-                    doorDisplayG.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\one_door.png");
+                    // Try to load and display the "moving up" indicator
+                    try
+                    {
+                        doorDisplayF.Image = null;
+                        doorDisplayG.Image = null;
 
-                    doorDisplayF.SizeMode = PictureBoxSizeMode.CenterImage;
-                    doorDisplayG.SizeMode = PictureBoxSizeMode.CenterImage;
+                        // Display the up indicator gif on the display board
+                        displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\up_indicator_gif.gif");
+                        displayBoard.SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error loading image: " + ex.Message);
+                    }
 
+                    // Change button colors to show the elevator is moving upwards
+                    firstFloorBtn.BackColor = Color.Green;
+                    groundFloorBtn.BackColor = Color.White;
 
-                    groundFloorBtn.Enabled = true;
-                    enableDoorButton();
-                    enableLiftButton();
+                    // Move the elevator upwards by a set speed
+                    elevator.Top -= liftSpeed;
 
-                    // calling function to insert logs to the database
-                    insertElevatorLogs("Elevator stops at First floor");
+                    // Check if the elevator has reached the first floor
+                    if (elevator.Top <= firstFloorPositionY)
+                    {
+                        // Update display board and button colors once elevator reaches first floor
+                        try
+                        {
+                            displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\one_floor.png");
+                            displayBoard.SizeMode = PictureBoxSizeMode.CenterImage;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error loading image: " + ex.Message);
+                        }
 
-                    // to show the newly recorded logs
-                    fetchLatestElevatorLogs();
+                        // Set the elevator to the exact first floor position and stop the timer
+                        elevator.Top = firstFloorPositionY;
+                        firstFloorBtn.BackColor = Color.Red;
+                        isAtFirstFloor = true;
+                        liftTimer.Stop();
 
-                    AutomaticOpenCloseDoor();
+                        // Load door images and enable interaction again
+                        try
+                        {
+                            doorDisplayF.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\one_door.png");
+                            doorDisplayG.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\one_door.png");
 
+                            doorDisplayF.SizeMode = PictureBoxSizeMode.CenterImage;
+                            doorDisplayG.SizeMode = PictureBoxSizeMode.CenterImage;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error loading image: " + ex.Message);
+                        }
+
+                        groundFloorBtn.Enabled = true; // Enable ground floor button
+
+                        // Enable doors and elevator buttons after reaching the first floor
+                        enableDoorButton();
+                        enableLiftButton();
+
+                        // Log the elevator's action to the database
+                        try
+                        {
+                            insertElevatorLogs("Elevator stops at First floor");
+                            fetchLatestElevatorLogs();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error interacting with database: " + ex.Message);
+                        }
+
+                        // Handle automatic door opening and closing after the stop
+                        AutomaticOpenCloseDoor();
+                    }
+                }
+                // If the elevator is moving to the ground floor and hasn't reached it yet
+                else if (isMovingToGroundFloor && elevator.Top < groundFloorPositionY)
+                {
+                    disableLiftButton();
+                    disableDoorButton();
+
+                    isAtFirstFloor = false;
+
+                    doorDisplayF.Image = null;
+                    doorDisplayG.Image = null;
+
+                    // Try to load and display the "moving down" indicator
+                    try
+                    {
+                        displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\down_indicator.gif");
+                        displayBoard.SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error loading image: " + ex.Message);
+                    }
+
+                    // Change button colors to show the elevator is moving downwards
+                    firstFloorBtn.BackColor = Color.White;
+                    groundFloorBtn.BackColor = Color.Green;
+
+                    // Move the elevator downwards by a set speed
+                    elevator.Top += liftSpeed;
+
+                    // Check if the elevator has reached the ground floor
+                    if (elevator.Top >= groundFloorPositionY)
+                    {
+                        // Update display board and button colors once elevator reaches ground floor
+                        try
+                        {
+                            displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\g_floor.png");
+                            displayBoard.SizeMode = PictureBoxSizeMode.CenterImage;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error loading image: " + ex.Message);
+                        }
+
+                        // Set the elevator to the exact ground floor position and stop the timer
+                        elevator.Top = groundFloorPositionY;
+                        groundFloorBtn.BackColor = Color.Red;
+                        liftTimer.Stop();
+
+                        // Load door images for the ground floor and enable interaction
+                        try
+                        {
+                            doorDisplayG.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\g_door.png");
+                            doorDisplayF.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\g_door.png");
+
+                            doorDisplayG.SizeMode = PictureBoxSizeMode.CenterImage;
+                            doorDisplayF.SizeMode = PictureBoxSizeMode.CenterImage;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error loading image: " + ex.Message);
+                        }
+
+                        firstFloorBtn.Enabled = true;
+
+                        isAtGroundFloor = true; // Set the state to ground floor
+                        enableDoorButton();
+                        enableLiftButton();
+
+                        // Log the elevator's action to the database
+                        try
+                        {
+                            insertElevatorLogs("Elevator stops at Ground floor");
+                            fetchLatestElevatorLogs();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error interacting with database: " + ex.Message);
+                        }
+
+                        // Handle automatic door opening and closing after the stop
+                        AutomaticOpenCloseDoor();
+                    }
                 }
             }
-            else if (isMovingToGroundFloor && elevator.Top < groundFloorPositionY)
+            catch (Exception ex)
             {
-                disableLiftButton();
-                disableDoorButton();
-
-                isAtFirstFloor = false;
-
-                doorDisplayF.Image = null;
-                doorDisplayG.Image = null;
-
-                displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\down_indicator.gif");
-                displayBoard.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                firstFloorBtn.BackColor = Color.White;
-                groundFloorBtn.BackColor = Color.Green;
-
-                elevator.Top += liftSpeed;
-
-                if (elevator.Top >= groundFloorPositionY)
-                {
-                    displayBoard.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\g_floor.png");
-                    displayBoard.SizeMode = PictureBoxSizeMode.CenterImage;
-
-                    elevator.Top = groundFloorPositionY;
-                    groundFloorBtn.BackColor = Color.Red;
-                    liftTimer.Stop();
-
-                    doorDisplayG.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\g_door.png");
-                    doorDisplayF.Image = Image.FromFile(@"D:\University_Assignment\C#\elevator_control_system\Resources\g_door.png");
-
-                    doorDisplayG.SizeMode = PictureBoxSizeMode.CenterImage;
-                    doorDisplayF.SizeMode = PictureBoxSizeMode.CenterImage;
-
-
-                    firstFloorBtn.Enabled = true;
-
-                    isAtGroundFloor = true;
-                    enableDoorButton();
-                    enableLiftButton();
-
-                    // calling function to insert logs to the database
-                    insertElevatorLogs("Elevator stops at Ground floor");
-
-                    // to show the newly recorded logs
-                    fetchLatestElevatorLogs();
-
-                    AutomaticOpenCloseDoor();
-
-                }
+                MessageBox.Show("Unexpected error: " + ex.Message);
             }
         }
+
+
 
         // Timer tick event to animate the door
         private void doorTimer_Tick(object sender, EventArgs e)
         {
-            if (isAtGroundFloor)
+            try
             {
-                if (isGroundFloorDoorOpening)
+                // Check if the elevator is at the ground floor
+                if (isAtGroundFloor)
                 {
-                    closeDoorBtn.Enabled = false;
-
-                    // Move the left door to the left
-                    if (groundFloorDoorPanelL.Left > leftDoorInitialX - doorOpenMaxDistance)
+                    // If the ground floor door is opening
+                    if (isGroundFloorDoorOpening)
                     {
-                        groundFloorDoorPanelL.Left -= doorSpeed;
+                        closeDoorBtn.Enabled = false;
+
+                        // Move the left door to the left
+                        if (groundFloorDoorPanelL.Left > leftDoorInitialX - doorOpenMaxDistance)
+                        {
+                            groundFloorDoorPanelL.Left -= doorSpeed;
+                        }
+
+                        // Move the right door to the right
+                        if (groundFloorDoorPanelR.Left < rightDoorInitialX + doorOpenMaxDistance)
+                        {
+                            groundFloorDoorPanelR.Left += doorSpeed;
+                        }
+
+                        // Stop the timer once the door is fully opened
+                        if (groundFloorDoorPanelL.Left <= leftDoorInitialX - doorOpenMaxDistance &&
+                            groundFloorDoorPanelR.Left >= rightDoorInitialX + doorOpenMaxDistance)
+                        {
+                            doorTimer.Stop();
+                            closeDoorBtn.Enabled = true;
+                        }
                     }
-
-                    // Move the right door to the right
-                    if (groundFloorDoorPanelR.Left < rightDoorInitialX + doorOpenMaxDistance)
+                    // If the ground floor door is closing
+                    else if (isGroundFloorDoorClosing)
                     {
-                        groundFloorDoorPanelR.Left += doorSpeed;
-                    }
+                        openDoorBtn.Enabled = false;
 
-                    // Stop the timer once the door is fully opened
-                    if (groundFloorDoorPanelL.Left <= leftDoorInitialX - doorOpenMaxDistance &&
-                        groundFloorDoorPanelR.Left >= rightDoorInitialX + doorOpenMaxDistance)
-                    {
-                        doorTimer.Stop();
-                        closeDoorBtn.Enabled = true;
+                        // Move the left door back to its initial position
+                        if (groundFloorDoorPanelL.Left < leftDoorInitialX)
+                        {
+                            groundFloorDoorPanelL.Left += doorSpeed;
+                        }
+
+                        // Move the right door back to its initial position
+                        if (groundFloorDoorPanelR.Left > rightDoorInitialX)
+                        {
+                            groundFloorDoorPanelR.Left -= doorSpeed;
+                        }
+
+                        // Stop the timer once the door is fully closed
+                        if (groundFloorDoorPanelL.Left >= leftDoorInitialX &&
+                            groundFloorDoorPanelR.Left <= rightDoorInitialX)
+                        {
+                            doorTimer.Stop();
+                            openDoorBtn.Enabled = true;
+                        }
                     }
                 }
-                else if (isGroundFloorDoorClosing)
+                // Check if the elevator is at the first floor
+                else if (isAtFirstFloor)
                 {
-                    openDoorBtn.Enabled = false;
-                    if (groundFloorDoorPanelL.Left < leftDoorInitialX)
+                    // If the first floor door is opening
+                    if (isFirstFloorDoorOpening)
                     {
-                        groundFloorDoorPanelL.Left += doorSpeed;
+                        closeDoorBtn.Enabled = false;
+
+                        // Move the left door to the left
+                        if (firstFloorDoorPanelL.Left > leftDoorInitialX - doorOpenMaxDistance)
+                        {
+                            firstFloorDoorPanelL.Left -= doorSpeed;
+                        }
+
+                        // Move the right door to the right
+                        if (firstFloorDoorPanelR.Left < rightDoorInitialX + doorOpenMaxDistance)
+                        {
+                            firstFloorDoorPanelR.Left += doorSpeed;
+                        }
+
+                        // Stop the timer once the door is fully opened
+                        if (firstFloorDoorPanelL.Left <= leftDoorInitialX - doorOpenMaxDistance &&
+                            firstFloorDoorPanelR.Left >= rightDoorInitialX + doorOpenMaxDistance)
+                        {
+                            doorTimer.Stop();
+                            closeDoorBtn.Enabled = true;
+                        }
                     }
-
-                    if (groundFloorDoorPanelR.Left > rightDoorInitialX)
+                    // If the first floor door is closing
+                    else if (isFirstFloorDoorClosing)
                     {
-                        groundFloorDoorPanelR.Left -= doorSpeed;
-                    }
+                        openDoorBtn.Enabled = false;
 
-                    if (groundFloorDoorPanelL.Left >= leftDoorInitialX &&
-                        groundFloorDoorPanelR.Left <= rightDoorInitialX)
-                    {
-                        doorTimer.Stop();
-                        openDoorBtn.Enabled = true;
+                        // Move the left door back to its initial position
+                        if (firstFloorDoorPanelL.Left < leftDoorInitialX)
+                        {
+                            firstFloorDoorPanelL.Left += doorSpeed;
+                        }
 
+                        // Move the right door back to its initial position
+                        if (firstFloorDoorPanelR.Left > rightDoorInitialX)
+                        {
+                            firstFloorDoorPanelR.Left -= doorSpeed;
+                        }
+
+                        // Stop the timer once the door is fully closed
+                        if (firstFloorDoorPanelL.Left >= leftDoorInitialX &&
+                            firstFloorDoorPanelR.Left <= rightDoorInitialX)
+                        {
+                            doorTimer.Stop();
+                            openDoorBtn.Enabled = true;
+                        }
                     }
                 }
             }
-
-            else if (isAtFirstFloor)
+            catch (Exception ex)
             {
-                if (isFirstFloorDoorOpening)
-                {
-                    closeDoorBtn.Enabled = false;
-                    // Move the left door to the left
-                    if (firstFloorDoorPanelL.Left > leftDoorInitialX - doorOpenMaxDistance)
-                    {
-                        firstFloorDoorPanelL.Left -= doorSpeed;
-                    }
+                // Catch and handle any unexpected exceptions
+                MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    // Move the right door to the right
-                    if (firstFloorDoorPanelR.Left < rightDoorInitialX + doorOpenMaxDistance)
-                    {
-                        firstFloorDoorPanelR.Left += doorSpeed;
-                    }
-
-                    // Stop the timer once the door is fully opened
-                    if (firstFloorDoorPanelL.Left <= leftDoorInitialX - doorOpenMaxDistance &&
-                        firstFloorDoorPanelR.Left >= rightDoorInitialX + doorOpenMaxDistance)
-                    {
-                        doorTimer.Stop();
-                        closeDoorBtn.Enabled = true;
-                    }
-                }
-                else if (isFirstFloorDoorClosing)
-                {
-                    openDoorBtn.Enabled = false;
-                    if (firstFloorDoorPanelL.Left < leftDoorInitialX)
-                    {
-                        firstFloorDoorPanelL.Left += doorSpeed;
-                    }
-
-                    if (firstFloorDoorPanelR.Left > rightDoorInitialX)
-                    {
-                        firstFloorDoorPanelR.Left -= doorSpeed;
-                    }
-
-                    if (firstFloorDoorPanelL.Left >= leftDoorInitialX &&
-                        firstFloorDoorPanelR.Left <= rightDoorInitialX)
-                    {
-                        doorTimer.Stop();
-                        openDoorBtn.Enabled = true;
-
-                    }
-                }
-
+                // Optionally log the exception for further investigation
+                Console.WriteLine(ex.ToString());
             }
         }
+
+
 
         private void openElevatorDoor()
         {

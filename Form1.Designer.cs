@@ -48,14 +48,14 @@
             this.doorDisplayG = new System.Windows.Forms.PictureBox();
             this.doorDisplayF = new System.Windows.Forms.PictureBox();
             this.requestFirstBtn = new System.Windows.Forms.Panel();
-            this.firstFloorDoorPanelL = new System.Windows.Forms.PictureBox();
-            this.firstFloorDoorPanelR = new System.Windows.Forms.PictureBox();
-            this.requestGroundBtn = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.requestGroundBtn = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.requestFirstFloorBtn = new System.Windows.Forms.Button();
+            this.firstFloorDoorPanelR = new System.Windows.Forms.PictureBox();
+            this.firstFloorDoorPanelL = new System.Windows.Forms.PictureBox();
+            this.panel4 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.elevator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayBoard)).BeginInit();
@@ -66,10 +66,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.doorDisplayG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doorDisplayF)).BeginInit();
             this.requestFirstBtn.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelR)).BeginInit();
-            this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelL)).BeginInit();
             this.SuspendLayout();
             // 
             // elevator
@@ -260,26 +260,14 @@
             this.requestFirstBtn.Size = new System.Drawing.Size(430, 717);
             this.requestFirstBtn.TabIndex = 16;
             // 
-            // firstFloorDoorPanelL
+            // panel5
             // 
-            this.firstFloorDoorPanelL.Image = ((System.Drawing.Image)(resources.GetObject("firstFloorDoorPanelL.Image")));
-            this.firstFloorDoorPanelL.Location = new System.Drawing.Point(100, 28);
-            this.firstFloorDoorPanelL.Name = "firstFloorDoorPanelL";
-            this.firstFloorDoorPanelL.Size = new System.Drawing.Size(103, 267);
-            this.firstFloorDoorPanelL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstFloorDoorPanelL.TabIndex = 11;
-            this.firstFloorDoorPanelL.TabStop = false;
-            this.firstFloorDoorPanelL.Click += new System.EventHandler(this.firstFloorDoorPanelL_Click_1);
-            // 
-            // firstFloorDoorPanelR
-            // 
-            this.firstFloorDoorPanelR.Image = ((System.Drawing.Image)(resources.GetObject("firstFloorDoorPanelR.Image")));
-            this.firstFloorDoorPanelR.Location = new System.Drawing.Point(200, 28);
-            this.firstFloorDoorPanelR.Name = "firstFloorDoorPanelR";
-            this.firstFloorDoorPanelR.Size = new System.Drawing.Size(104, 267);
-            this.firstFloorDoorPanelR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstFloorDoorPanelR.TabIndex = 12;
-            this.firstFloorDoorPanelR.TabStop = false;
+            this.panel5.BackColor = System.Drawing.Color.Gainsboro;
+            this.panel5.Controls.Add(this.requestGroundBtn);
+            this.panel5.Location = new System.Drawing.Point(301, 29);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(129, 267);
+            this.panel5.TabIndex = 20;
             // 
             // requestGroundBtn
             // 
@@ -292,15 +280,6 @@
             this.requestGroundBtn.UseVisualStyleBackColor = true;
             this.requestGroundBtn.Click += new System.EventHandler(this.requestGroundBtn_Click);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel2.Controls.Add(this.requestFirstFloorBtn);
-            this.panel2.Location = new System.Drawing.Point(305, 435);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(108, 269);
-            this.panel2.TabIndex = 19;
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Gainsboro;
@@ -309,22 +288,14 @@
             this.panel3.Size = new System.Drawing.Size(101, 269);
             this.panel3.TabIndex = 20;
             // 
-            // panel4
+            // panel2
             // 
-            this.panel4.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel4.Location = new System.Drawing.Point(12, 31);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(101, 275);
-            this.panel4.TabIndex = 21;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel5.Controls.Add(this.requestGroundBtn);
-            this.panel5.Location = new System.Drawing.Point(301, 29);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(129, 267);
-            this.panel5.TabIndex = 20;
+            this.panel2.BackColor = System.Drawing.Color.Gainsboro;
+            this.panel2.Controls.Add(this.requestFirstFloorBtn);
+            this.panel2.Location = new System.Drawing.Point(305, 435);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(108, 269);
+            this.panel2.TabIndex = 19;
             // 
             // requestFirstFloorBtn
             // 
@@ -336,6 +307,35 @@
             this.requestFirstFloorBtn.TabIndex = 0;
             this.requestFirstFloorBtn.UseVisualStyleBackColor = true;
             this.requestFirstFloorBtn.Click += new System.EventHandler(this.requestFirstFloorBtn_Click);
+            // 
+            // firstFloorDoorPanelR
+            // 
+            this.firstFloorDoorPanelR.Image = ((System.Drawing.Image)(resources.GetObject("firstFloorDoorPanelR.Image")));
+            this.firstFloorDoorPanelR.Location = new System.Drawing.Point(200, 28);
+            this.firstFloorDoorPanelR.Name = "firstFloorDoorPanelR";
+            this.firstFloorDoorPanelR.Size = new System.Drawing.Size(104, 267);
+            this.firstFloorDoorPanelR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.firstFloorDoorPanelR.TabIndex = 12;
+            this.firstFloorDoorPanelR.TabStop = false;
+            // 
+            // firstFloorDoorPanelL
+            // 
+            this.firstFloorDoorPanelL.Image = ((System.Drawing.Image)(resources.GetObject("firstFloorDoorPanelL.Image")));
+            this.firstFloorDoorPanelL.Location = new System.Drawing.Point(100, 28);
+            this.firstFloorDoorPanelL.Name = "firstFloorDoorPanelL";
+            this.firstFloorDoorPanelL.Size = new System.Drawing.Size(103, 267);
+            this.firstFloorDoorPanelL.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.firstFloorDoorPanelL.TabIndex = 11;
+            this.firstFloorDoorPanelL.TabStop = false;
+            this.firstFloorDoorPanelL.Click += new System.EventHandler(this.firstFloorDoorPanelL_Click_1);
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Gainsboro;
+            this.panel4.Location = new System.Drawing.Point(12, 31);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(101, 275);
+            this.panel4.TabIndex = 21;
             // 
             // Elevator_Control_System
             // 
@@ -366,10 +366,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.doorDisplayG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.doorDisplayF)).EndInit();
             this.requestFirstBtn.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelR)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstFloorDoorPanelL)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -142,4 +142,31 @@
   <data name="direction_ground_floor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\direction_ground_floor.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="close_door" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close_door.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="open_door" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\open_door.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Inside_Lift" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Inside_Lift.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="elevator_control_space" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\elevator_control_space.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="doorFrameLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\doorFrameLeft.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="doorFrameRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\doorFrameRight.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="display" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\display.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="firstfloorbutton1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\firstfloorbutton1.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="groundFloorbutton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\groundFloorbutton.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

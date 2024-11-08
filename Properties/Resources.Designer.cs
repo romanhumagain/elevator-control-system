@@ -63,6 +63,16 @@ namespace elevator_control_system.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] close_door {
+            get {
+                object obj = ResourceManager.GetObject("close_door", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] direction_first_floor {
             get {
                 object obj = ResourceManager.GetObject("direction_first_floor", resourceCulture);
@@ -83,9 +93,59 @@ namespace elevator_control_system.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] display {
+            get {
+                object obj = ResourceManager.GetObject("display", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] doorFrameLeft {
+            get {
+                object obj = ResourceManager.GetObject("doorFrameLeft", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] doorFrameRight {
+            get {
+                object obj = ResourceManager.GetObject("doorFrameRight", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] down_indicator {
             get {
                 object obj = ResourceManager.GetObject("down_indicator", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] elevator_control_space {
+            get {
+                object obj = ResourceManager.GetObject("elevator_control_space", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] firstfloorbutton1 {
+            get {
+                object obj = ResourceManager.GetObject("firstfloorbutton1", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -113,6 +173,26 @@ namespace elevator_control_system.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] groundFloorbutton {
+            get {
+                object obj = ResourceManager.GetObject("groundFloorbutton", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Inside_Lift {
+            get {
+                object obj = ResourceManager.GetObject("Inside_Lift", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] one_door {
             get {
                 object obj = ResourceManager.GetObject("one_door", resourceCulture);
@@ -126,6 +206,16 @@ namespace elevator_control_system.Properties {
         internal static byte[] one_floor {
             get {
                 object obj = ResourceManager.GetObject("one_floor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] open_door {
+            get {
+                object obj = ResourceManager.GetObject("open_door", resourceCulture);
                 return ((byte[])(obj));
             }
         }
