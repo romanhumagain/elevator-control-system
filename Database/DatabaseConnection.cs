@@ -1,5 +1,5 @@
-﻿using System;
-using MySqlConnector;
+﻿using MySqlConnector;
+using System;
 
 namespace elevator_control_system.Database
 {
@@ -15,10 +15,10 @@ namespace elevator_control_system.Database
             {
                 // Initialize the connection
                 connection = new MySqlConnection(url);
-                connection.Open(); 
+                connection.Open();
                 Console.WriteLine("Connected to MySQL database.");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine("Error connecting to database: " + ex.Message);
             }

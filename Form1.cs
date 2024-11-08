@@ -692,7 +692,7 @@ namespace elevator_control_system
             openElevatorDoor();
             disableLiftButton();
 
-            await Task.Delay(3000);
+            await Task.Delay(2000);
             closeElevatorDoor();
             enableLiftButton();
         }

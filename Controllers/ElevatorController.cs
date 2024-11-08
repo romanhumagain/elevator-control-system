@@ -3,6 +3,7 @@ using elevator_control_system.Models;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace elevator_control_system.Controllers
 {
@@ -14,33 +15,41 @@ namespace elevator_control_system.Controllers
         public void InsertElevatorLog(ElevatorLog log)
         {
             MySqlConnection conn = db.Connect();  // Establish a connection to the database
-
             if (conn != null)
             {
                 try
                 {
-                    // SQL query to insert a new log into the elevator_logs table
+                    // Create a DataTable to hold the new log data
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add("date", typeof(string));
+                    dataTable.Columns.Add("requested_at", typeof(TimeSpan));
+                    dataTable.Columns.Add("action", typeof(string));
+
+                    // Add a row to the DataTable
+                    dataTable.Rows.Add(log.Date.ToString("yyyy-MM-dd"), log.RequestedAt, log.Action);
+
+                    // Create the SQL query for inserting data
                     string query = "INSERT INTO elevator_logs (date, requested_at, action) VALUES (@date, @requestedAt, @action)";
 
-                    // Create a MySQL command object with the query and connection
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                    // Bind parameters to prevent SQL injection (binding the values to the query)
-                    cmd.Parameters.AddWithValue("@date", log.Date.ToString("yyyy-MM-dd"));
-                    cmd.Parameters.AddWithValue("@requestedAt", log.RequestedAt);
-                    cmd.Parameters.AddWithValue("@action", log.Action);
-
-                    // Execute the query to insert the log
-                    int result = cmd.ExecuteNonQuery();
-
-                    // Check if the insertion was successful
-                    if (result > 0)
+                    // Create a DataAdapter and set the InsertCommand
+                    using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter())
                     {
-                        Console.WriteLine("Elevator log inserted successfully.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Failed to insert elevator log.");
+                        dataAdapter.InsertCommand = new MySqlCommand(query, conn);
+                        dataAdapter.InsertCommand.Parameters.AddWithValue("@date", log.Date.ToString("yyyy-MM-dd"));
+                        dataAdapter.InsertCommand.Parameters.AddWithValue("@requestedAt", log.RequestedAt);
+                        dataAdapter.InsertCommand.Parameters.AddWithValue("@action", log.Action);
+
+                        // Use DataAdapter to insert the data into the database
+                        int result = dataAdapter.Update(dataTable);  // This will apply the changes to the database
+
+                        if (result > 0)
+                        {
+                            Console.WriteLine("Elevator log inserted successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Failed to insert elevator log.");
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -49,16 +58,16 @@ namespace elevator_control_system.Controllers
                 }
                 finally
                 {
-                    // close the database connection after use
+                    // Close the database connection after use
                     db.Close(conn);
                 }
             }
             else
             {
-                // If the connection fails, print an error
                 Console.WriteLine("Failed to connect to the database.");
             }
         }
+
 
         // Method to fetch the latest elevator logs from the database
         public List<ElevatorLog> GetLatestElevatorLogs()
@@ -73,46 +82,46 @@ namespace elevator_control_system.Controllers
                     // SQL query to select all logs ordered by date and requested_at descending
                     string query = "SELECT logs_id, date, requested_at, action FROM elevator_logs ORDER BY date DESC, requested_at DESC";
 
-                    // Create a MySQL command object with the query and connection
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    // Create a DataAdapter to execute the query
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query, conn);
 
-                    // Execute the query and get a data reader to fetch the results
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    // Create a DataTable to hold the fetched data
+                    DataTable dataTable = new DataTable();
 
-                    // Read each log from the data reader and add it to the logs list
-                    while (reader.Read())
+                    // Fill the DataTable with data from the query
+                    dataAdapter.Fill(dataTable);
+
+                    // Read each row from the DataTable and convert it to an ElevatorLog object
+                    foreach (DataRow row in dataTable.Rows)
                     {
                         ElevatorLog log = new ElevatorLog
                         {
-                            LogsId = reader.GetInt32("logs_id"),
-                            Date = reader.GetDateTime("date"),
-                            RequestedAt = reader.GetTimeSpan("requested_at"),
-                            Action = reader.GetString("action")
+                            LogsId = Convert.ToInt32(row["logs_id"]),
+                            Date = Convert.ToDateTime(row["date"]),
+                            RequestedAt = TimeSpan.Parse(row["requested_at"].ToString()),
+                            Action = row["action"].ToString()
                         };
                         logs.Add(log);  // Add the log to the list
                     }
-
-                    reader.Close();  // Close the reader after use
                 }
                 catch (Exception ex)
                 {
-                    // If there's an error, print it
                     Console.WriteLine("Error fetching elevator logs: " + ex.Message);
                 }
                 finally
                 {
-                    // close the database connection after use
+                    // Close the database connection after use
                     db.Close(conn);
                 }
             }
             else
             {
-                // If the connection fails, print an error
                 Console.WriteLine("Failed to connect to the database.");
             }
 
             return logs;  // Return the list of fetched logs
         }
+
 
         // Method that handles the clear logs functionality (deletes all logs)
         public bool ClearLogs()
@@ -125,18 +134,27 @@ namespace elevator_control_system.Controllers
                 try
                 {
                     // SQL query to delete all logs from the elevator_logs table
-                    String query = "TRUNCATE TABLE elevator_logs";
+                    string query = "TRUNCATE TABLE elevator_logs";
 
-                    // Create a MySQL command object with the query and connection
-                    MySqlCommand command = new MySqlCommand(query, conn);
+                    // Use MySqlCommand to execute the TRUNCATE query
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        // Execute the TRUNCATE query
+                        int result = cmd.ExecuteNonQuery();
 
-                    // Execute the query to delete all logs
-                    command.ExecuteNonQuery();
-                    isLogsCleared = true;  // If successful, set the flag to true
+                        // Check if the operation was successful
+                        if (result >= 0)
+                        {
+                            isLogsCleared = true;  // If successful, set the flag to true
+                        }
+                        else
+                        {
+                            isLogsCleared = false;  // If unsuccessful, set the flag to false
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // If there's an error, print it and set the flag to false
                     Console.WriteLine("Error deleting elevator log: " + ex.Message);
                     isLogsCleared = false;
                 }
@@ -149,6 +167,7 @@ namespace elevator_control_system.Controllers
 
             return isLogsCleared;  // Return whether logs were successfully cleared
         }
+
 
     }
 }
